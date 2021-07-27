@@ -1,0 +1,9 @@
+Manifest-Version: 1.0
+Created-By: IntelliJ IDEA
+Built-By: vasil
+Build-Jdk: version 16
+Implementation-Title: springbootdemo
+Implementation-Version: 0.0.1-SNAPSHOT
+Implementation-Vendor-Id: net.proselyte
+Main-Class: ${start-class}
+
