@@ -1,5 +1,6 @@
 package web.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -11,13 +12,15 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import web.config.handler.LoginSuccessHandler;
 //import web.config.handler.LoginSuccessHandler;
 //import web.config.handler.LoginSuccessHandler;
 
-//@Configuration
+@Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
+    @Autowired
     private UserDetailsService userDetailsService;
 
     public SecurityConfig(UserDetailsService userDetailsService) {
@@ -84,11 +87,32 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-//                .antMatchers("/admin").hasRole("ADMIN")
-//                .antMatchers("user").hasAnyRole("ADMIN", "USER")
+                .antMatchers("/admin/").hasRole("ADMIN")
+                .antMatchers("/user/").hasAnyRole("ADMIN", "USER")
                 .antMatchers("/").permitAll()
-                .and().formLogin();
+                .and().formLogin()
+                .successHandler(new LoginSuccessHandler());
+//    }
+
+//        http.formLogin()
+//                // указываем страницу с формой логина
+//                .loginPage("/login")
+//                //указываем логику обработки при логине
+//                .successHandler(new LoginSuccessHandler())
+//                // указываем action с формы логина
+//                .loginProcessingUrl("/login")
+//                // Указываем параметры логина и пароля с формы логина
+//                .usernameParameter("j_username")
+//                .passwordParameter("j_password")
+//                // даем доступ к форме логина всем
+//                .permitAll();
+
+
     }
+
+
+
+
 
 }
 

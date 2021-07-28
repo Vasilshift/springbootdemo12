@@ -16,14 +16,14 @@ public class Role {
     @Column(name = "role")
     private String rolename;
 
-    @Transient
-    @ManyToMany(mappedBy = "roles")
-    private Collection<User> users;
+//    @Transient
+//    @ManyToMany(mappedBy = "roles")
+//    private Collection<User> users;
 
-    public Role(Long id, String rolename, Collection<User> users) {
+    public Role(Long id, String rolename) {
         this.id = id;
         this.rolename = rolename;
-        this.users = users;
+        //this.users = users;
     }
 
     public Long getId() {
@@ -42,11 +42,11 @@ public class Role {
         this.rolename = rolename;
     }
 
-    public Collection<User> getUsers() {
-        return users;
-    }
-
-    public void setUsers(Collection<User> users) {
-        this.users = users;
-    }
+//    public Collection<User> getUsers() {
+//        return users;
+//    }
+//
+//    public void setUsers(Collection<User> users) {
+//        this.users = users;
+//    }
 }

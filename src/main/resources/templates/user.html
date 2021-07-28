@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Show user by username</title>
+</head>
+<body>
+<h1>Show user page user</h1>
+
+<tr>
+    <p th:text="${user.getUsername()}">VALUE</p>
+    <p th:text="${user.getId()}">VALUE</p>
+</tr>
+
+<div>
+    <a href="/logout">logout</a>
+</div>
+
+</body>
+</html>

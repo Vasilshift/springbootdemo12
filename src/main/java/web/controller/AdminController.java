@@ -1,14 +1,11 @@
 package web.controller;
 
+import org.springframework.web.bind.annotation.*;
 import web.model.User;
-import web.service.RoleService;
 import web.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,12 +14,12 @@ import java.util.List;
 public class AdminController {
 
     private final UserService userService;
-    private final RoleService roleService;
+    //private final RoleService roleService;
 
     @Autowired
-    public AdminController(UserService userService, RoleService roleService) {
+    public AdminController(UserService userService) {
         this.userService = userService;
-        this.roleService = roleService;
+        //this.roleService = roleService;
     }
 
     @GetMapping(value = "/")
@@ -48,7 +45,15 @@ public class AdminController {
     }
 
     @PostMapping("/user-create")
-    public String createUser(User user){
+    public String createUser(@ModelAttribute("user") User user,
+                             @RequestParam(required = false, name = "roleAdmin") String roleAdmin
+                            ) {
+        if (roleAdmin != null) {
+            userService.saveUser(userService.addRoleToUser(user, userService.getRoleByRolename("ROLE_ADMIN")));
+        } else {
+            userService.saveUser(userService.addRoleToUser(user, userService.getRoleByRolename("ROLE_USER")));
+        }
+
         userService.saveUser(user);
         return "redirect:/admin";
     }
