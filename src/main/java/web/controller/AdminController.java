@@ -1,6 +1,7 @@
 package web.controller;
 
 import web.model.User;
+import web.service.RoleService;
 import web.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,10 +17,12 @@ import java.util.List;
 public class AdminController {
 
     private final UserService userService;
+    private final RoleService roleService;
 
     @Autowired
-    public AdminController(UserService userService) {
+    public AdminController(UserService userService, RoleService roleService) {
         this.userService = userService;
+        this.roleService = roleService;
     }
 
     @GetMapping(value = "/")
@@ -32,7 +35,7 @@ public class AdminController {
         return "index";
     }
 
-    @GetMapping("/users")
+    @GetMapping("/admin")
     public String findAll(Model model){
         List<User> users = userService.findAll();
         model.addAttribute("users", users);
@@ -47,13 +50,13 @@ public class AdminController {
     @PostMapping("/user-create")
     public String createUser(User user){
         userService.saveUser(user);
-        return "redirect:/users";
+        return "redirect:/admin";
     }
 
     @GetMapping("user-delete/{id}")
     public String deleteUser(@PathVariable("id") Long id){
         userService.deleteById(id);
-        return "redirect:/users";
+        return "redirect:/admin";
     }
 
     @GetMapping("/user-update/{id}")
@@ -66,6 +69,6 @@ public class AdminController {
     @PostMapping("/user-update")
     public String updateUser(User user){
         userService.saveUser(user);
-        return "redirect:/users";
+        return "redirect:/admin";
     }
 }

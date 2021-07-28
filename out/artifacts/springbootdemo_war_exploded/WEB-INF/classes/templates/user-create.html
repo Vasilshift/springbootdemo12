@@ -7,9 +7,24 @@
 <body>
 <form action="#" th:action="@{/user-create}" th:object="${user}" method="post">
     <label for="firstName">First name</label>
-    <input type="text" th:field="*{username}" id="firstName" placeholder="First Name">
+    <input type="text" th:field="*{username}" id="firstName" placeholder="username">
     <label for="lastName">Last name</label>
-    <input type="text" th:field="*{password}" id="lastName" placeholder="Last Name">
+    <input type="text" th:field="*{password}" id="lastName" placeholder="password">
+
+    <label>
+        <input type="checkbox"
+               name="roleAdmin"
+               th:value="ROLE_ADMIN"
+               th:text="Admin">
+    </label>
+
+    <label>
+        <input type="checkbox"
+               name="roleUser"
+               th:value="ROLE_USER"
+               th:text="User">
+    </label>
+
     <input type="submit" value="Create User">
 </form>
 </body>
